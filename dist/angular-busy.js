@@ -38,7 +38,7 @@ angular.module('cgBusy').factory('_cgBusyTrackerFactory',['$timeout','$q',functi
                 tracker.durationPromise = $timeout(function(){
                     tracker.durationPromise = null;
                 },parseInt(options.minDuration,10) + (options.delay ? parseInt(options.delay,10) : 0));
-            }            
+            }
 		};
 
 		tracker.getThen = function(promise){
@@ -90,8 +90,8 @@ angular.module('cgBusy').factory('_cgBusyTrackerFactory',['$timeout','$q',functi
                 }
                 return tracker.promises.length > 0;
             } else {
-                //if both delay and min duration are set, 
-                //we don't want to initiate the min duration if the 
+                //if both delay and min duration are set,
+                //we don't want to initiate the min duration if the
                 //promise finished before the delay was complete
                 tracker.delayJustFinished = false;
                 return tracker.promises.length > 0;
@@ -180,7 +180,9 @@ angular.module('cgBusy').directive('cgBusy',['$compile','$templateCache','cgBusy
 					}
 
 					templateScope.$cgBusyIsActive = function() {
-						return tracker.active();
+						var busy = tracker.active();
+						scope.$emit('busyLoading', busy);
+						return busy;
 					};
 
 
